@@ -49,9 +49,24 @@ public class Account {
     else{
       double newBalance = balance + amount;
       setBalance(newBalance);
+      DataSource.updateAccountBalance(Id,newBalance);
     }
   }
 
-  public void withdraw(double amount) {
+  public void withdraw(double amount) throws AmountException{
+
+    if(amount < 0){
+      throw new AmountException("Minimum withdrawal is 1.00");
+    }
+    else if(amount > getBalance()){
+      throw new AmountException("Not enought funds in bank account");
+    }
+    else {
+
+      double newBalance = balance - amount;
+      setBalance(newBalance);
+      DataSource.updateAccountBalance(Id, newBalance);
+
+    }
   }
 }

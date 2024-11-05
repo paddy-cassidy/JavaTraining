@@ -1,16 +1,14 @@
 package bank;
 
 import java.util.Scanner;
-
 import javax.security.auth.login.LoginException;
-
 import bank.exceptions.AmountException;
 
 public class Menu {
 
   private Scanner scanner;
 
-  private static void main(String[] args){
+  public static void main(String[] args){
     System.out.println("Welcome to Paddy bank");
 
     Menu menu = new Menu();
@@ -76,7 +74,12 @@ private void showMenu(Customer customer, Account account){
       case 2:
         System.out.println("How nuch would you like to withdraw");
         amount = scanner.nextDouble();
-        account.withdraw(amount);
+        try{
+          account.withdraw(amount);
+        }catch(AmountException e){
+          System.out.println(e.getMessage());
+          System.out.println("Pls try again");
+        }
         break;
 
       case 3:
