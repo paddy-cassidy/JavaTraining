@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import javax.security.auth.login.LoginException;
 
+import bank.exceptions.AmountException;
+
 public class Menu {
 
   private Scanner scanner;
@@ -56,13 +58,39 @@ private void showMenu(Customer customer, Account account){
     System.out.println("============================================");
 
     selection = scanner.nextInt();
+    double amount = 0;
 
     switch(selection){
 
       case 1:
         System.out.println("How nuch would you like to desposit");
         amount = scanner.nextDouble();
-        account.desposit(amount);
+        try{
+          account.deposit(amount);
+        }catch(AmountException e){
+          System.out.println(e.getMessage());
+          System.out.println("Pls try again");
+        }
+        break;
+
+      case 2:
+        System.out.println("How nuch would you like to withdraw");
+        amount = scanner.nextDouble();
+        account.withdraw(amount);
+        break;
+
+      case 3:
+        System.out.println("Current balance: " + account.getBalance());
+        break;
+
+      case 4:
+        Authenticator.logout(customer);
+        System.out.println("Thanks for banking at Paddy bank");
+        break;
+
+      default:
+        System.out.println("Pls try again");
+        break;
 
 
     }
